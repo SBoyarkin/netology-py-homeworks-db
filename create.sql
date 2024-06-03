@@ -1,0 +1,58 @@
+CREATE TABLE IF NOT EXISTS genre (
+	id SERIAL PRIMARY KEY UNIQUE, 
+	genre VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS musican (
+	id SERIAL PRIMARY KEY, 
+	name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS musicant_genre (
+	id SERIAL PRIMARY KEY,
+	genre_id INTEGER NOT NULL REFERENCES genre(id),
+	musicant_id INTEGER NOT NULL REFERENCES musican(id)
+	
+);
+
+CREATE TABLE IF NOT EXISTS album (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(100) NOT NULL,
+	year DATE NOT NULL,
+	CONSTRAINT chek_year CHECK (year > '1950-01-01')
+);
+
+CREATE TABLE IF NOT EXISTS album_musicant (
+	id SERIAL PRIMARY KEY,
+	album_id INTEGER NOT NULL REFERENCES album(id),
+	musican_id INTEGER NOT NULL REFERENCES musican(id)
+);
+
+CREATE TABLE IF NOT EXISTS track (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR,
+	duration INTEGER NOT NULL,
+	album_id INTEGER NOT NULL REFERENCES album(id)
+	CONSTRAINT chek_duration  CHECK (duration > 10 AND duration <= 600)
+);
+
+CREATE TABLE IF NOT EXISTS music_collection (
+	id SERIAL PRIMARY KEY,
+	title VARCHAR(255) NOT NULL,
+	year DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS track_music_collection (
+	id SERIAL PRIMARY KEY,
+	music_collection_id INTEGER NOT NULL REFERENCES music_collection(id),
+	track_id INTEGER NOT NULL REFERENCES track(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS employee (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100) NOT NULL,
+	departament VARCHAR(150) NOT NULL,
+	director INTEGER REFERENCES employee(id)
+);
+

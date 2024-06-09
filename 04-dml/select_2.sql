@@ -9,7 +9,7 @@ SELECT title
 
 
 SELECT title
-  FROM  music_collection
+  FROM music_collection
  WHERE year BETWEEN '2018-01-01' and '2020-12-31';
 
 SELECT name

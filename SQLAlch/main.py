@@ -64,6 +64,27 @@ def add_sale(sale_list):
 
 
 
+pub_name_id = input('Введите название издателя или его id')
+
+def get_shop(pub):
+    data = session.query(Book).with_entities \
+        (Book.title, Shop.name, Sale.price, Sale.date_sale) \
+        .join(Publisher, Publisher.id == Book.publisher_id) \
+        .join(Stock, Stock.book_id == Book.id) \
+        .join(Shop, Shop.id == Stock.shop_id) \
+        .join(Sale, Sale.stock_id == Stock.id)
+    if pub.isdigit():
+        filter_data = data.filter(Publisher.id == pub).all()
+
+    else:
+        filter_data = data.filter(Publisher.name == pub).all()
+    for a,b,c,d in filter_data:
+        print(f"{a: <40} | {b: <10} | {c: <8} | {d.strftime('%d-%m-%Y')}")
+
+
+
+
+
 if __name__ == "__main__":
     add_publisher(pub_list)
     add_book(book_list)
@@ -71,18 +92,4 @@ if __name__ == "__main__":
     add_stock(stock_list)
     add_sale(sale_list)
     session.close()
-
-pub_name = input('Введите название издателя')
-
-
-
-data = session.query(Book).with_entities \
-    (Book.title, Shop.name, Sale.price, Sale.date_sale) \
-    .join(Publisher, Publisher.id == Book.publisher_id) \
-    .join(Stock, Stock.book_id == Book.id) \
-    .join(Shop, Shop.id == Stock.shop_id) \
-    .join(Sale, Sale.stock_id == Stock.id) \
-    .filter(Publisher.name == pub_name) \
-    .all()
-
-pprint(data)
+    get_shop(pub_name_id)

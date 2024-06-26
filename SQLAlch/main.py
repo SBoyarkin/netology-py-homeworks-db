@@ -78,18 +78,18 @@ def get_shop(pub):
 
     else:
         filter_data = data.filter(Publisher.name == pub).all()
-    for a,b,c,d in filter_data:
-        print(f"{a: <40} | {b: <10} | {c: <8} | {d.strftime('%d-%m-%Y')}")
+    for title,shop,price,date in filter_data:
+        print(f"{title: <40} | {shop: <10} | {price: <8} | {date.strftime('%d-%m-%Y')}")
 
 
 
 
 
 if __name__ == "__main__":
-    add_publisher(pub_list)
-    add_book(book_list)
-    add_shop(shop_list)
-    add_stock(stock_list)
-    add_sale(sale_list)
-    session.close()
+    # add_publisher(pub_list)
+    # add_book(book_list)
+    # add_shop(shop_list)
+    # add_stock(stock_list)
+    # add_sale(sale_list)
+    # session.close()
     get_shop(pub_name_id)
